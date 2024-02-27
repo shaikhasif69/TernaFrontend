@@ -216,7 +216,7 @@ class _DetailPageState extends State<DetailPage> {
                           width: 16,
                           height: 16,
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 10),
                         Container(
                           width: 320,
                           child: Text(
