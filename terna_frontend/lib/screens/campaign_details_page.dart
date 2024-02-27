@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class DetailPage extends StatefulWidget {
   Map data;
@@ -79,7 +80,7 @@ class _DetailPageState extends State<DetailPage> {
                         color: AppConstants.darkBlue,
                         fontWeight: FontWeight.w400),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6),
                   Row(
                     children: [
                       Text(
@@ -108,7 +109,7 @@ class _DetailPageState extends State<DetailPage> {
                 //   arguments: eventModel.toJson(),
                 // ),
                 style: ElevatedButton.styleFrom(
-                    primary: AppConstants.greenColor,
+                    backgroundColor: AppConstants.greenColor,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
@@ -139,17 +140,24 @@ class _DetailPageState extends State<DetailPage> {
             width: double.infinity,
             height: 310,
             margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 191, 192, 195),
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    AppConstants.eventAttachments + data["attachment"]),
-                // image: NetworkImage(
-                //   data['eventImages'][0]!,
-                // ),
-              ),
+            // decoration: BoxDecoration(
+            //   color: const Color.fromARGB(255, 191, 192, 195),
+            //   borderRadius: BorderRadius.circular(16),
+            //   image: DecorationImage(
+            //     fit: BoxFit.cover,
+            //     image: NetworkImage(
+            //         AppConstants.eventAttachments + data["attachment"]),
+            //     // image: NetworkImage(
+            //     //   data['eventImages'][0]!,
+            //     // ),
+            //   ),
+            // ),
+            child: FadeInImage.memoryNetwork(
+              fit: BoxFit.cover,
+              width: 80,
+              height: 80,
+              placeholder: kTransparentImage,
+              image: "${AppConstants.IP}/images/${data["attachment"]}",
             ),
           ),
           Positioned(
