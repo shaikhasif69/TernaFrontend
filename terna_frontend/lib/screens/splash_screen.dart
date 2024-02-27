@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,14 +23,23 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void showIntro() {
     Timer(const Duration(seconds: 3), () async {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => LoginPage(),
-        ),
-      );
-
       // Shared preferences should be used here
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      bool? isLoggedIn = prefs.getBool("isLoggedIn");
+
+      if (isLoggedIn != null) {
+        if (isLoggedIn) {
+          Get.toNamed("/userDashboard");
+        }
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => LoginPage(),
+          ),
+        );
+      }
     });
   }
 

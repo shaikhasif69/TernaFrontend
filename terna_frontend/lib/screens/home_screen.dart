@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:terna_frontend/models/Campaign.dart';
+import 'package:terna_frontend/services/Campaigns.dart';
 import 'package:terna_frontend/tabs/search_bar_widget.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
 
@@ -42,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
     ['KBC', 'Kuan banega ... C', 'assets/dummyImages/kbc.jpg', 90],
   ];
   // EventController eventController = Get.put(EventController());
+
+  Future<dynamic> campaigns = Campaigns.getAllCampaigns();
 
   @override
   void dispose() {
@@ -91,31 +95,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 15,
                   ),
                   Container(
-                    height: 105,
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        EventFeatureCards(
-                          eventFeatureItems[0],
-                          color: AppConstants.tAccentColor,
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        EventFeatureCards(
-                          eventFeatureItems[1],
-                          color: AppConstants.tAccentColor,
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  ),
+                      height: 105,
+                      child: FutureBuilder(
+                        future: campaigns,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasData) {
+                            final posts = snapshot.data!;
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return EventFeatureCards(
+                                  snapshot.data[index],
+                                  color: AppConstants.tAccentColor,
+                                );
+                              },
+                            );
+                          } else {
+                            return const Text("No data available");
+                          }
+                        },
+                      )),
                   const SizedBox(
                     height: 25,
                   ),

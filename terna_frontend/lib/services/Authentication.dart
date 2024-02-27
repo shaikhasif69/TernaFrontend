@@ -35,6 +35,11 @@ class Authentication {
       print(result);
       var mess = result["data"];
       print("mess" + mess);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userEmail', email);
+      await prefs.setString('userPhone', phone);
+      await prefs.setString('userPassword', password);
+      await prefs.setBool("isLoggedIn", true);
 
       if (mess == "ok") {
         Fluttertoast.showToast(
@@ -92,19 +97,39 @@ class Authentication {
   static Future<bool> loginUser(email, password) async {
     print("Called");
 
-      // Use the location data in your HTTP request
-      var response = await http.post(
-        Uri.parse(
-          "${AppConstants.IP}/loginUser",
-        ),
-        body: jsonEncode(
-          {
-            "userEmail": email,
-            "userPassword": password,
-    
-          },
-        ),
-        headers: {"Content-Type": "application/json"},
+    var response = await http.post(
+      Uri.parse(
+        "${AppConstants.IP}/loginUser",
+      ),
+      body: jsonEncode(
+        {"userEmail": email, "userPassword": password},
+      ),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    var data = await response.body;
+    final result = jsonDecode(data);
+    print(result);
+    var mess = result["user"];
+
+    if (mess != "fail") {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userId', mess["_id"]);
+      await prefs.setString('userEmail', mess["userEmail"]);
+      await prefs.setString('userPhone', mess["userPhone"]);
+      await prefs.setString('userPassword', mess["userPassword"]);
+      await prefs.setBool("isLoggedIn", true);
+
+      return true;
+    } else {
+      Fluttertoast.showToast(
+        msg: "Invalid Email/Password",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
       var data = await response.body;
       final result = jsonDecode(data);
@@ -136,4 +161,5 @@ class Authentication {
       // Rest of your code...
     } 
   }
+}
 

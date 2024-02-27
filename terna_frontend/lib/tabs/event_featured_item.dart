@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
 
-class EventFeatureItem {
-  final String name;
-  final String imagePath;
+// class EventFeatureItem {
+//   final String name;
+//   final String desc;
+//   final String imagePath;
 
-  EventFeatureItem(this.name, this.imagePath);
-}
-
-var eventFeatureItems = [
-  EventFeatureItem('RaktDaan!', 'assets/images/rock&concert.jpg'),
-  EventFeatureItem('BJPRakt', 'assets/images/hackathon1.jpg')
-];
+//   EventFeatureItem(this.name, this.desc, this.imagePath);
+// }
 
 class EventFeatureCards extends StatelessWidget {
   const EventFeatureCards(this.eventFeatureItem,
       {this.color = AppConstants.tPrimaryColor});
 
-  final EventFeatureItem eventFeatureItem;
+  final eventFeatureItem;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
+    print("eventFeatureItem");
+    print(eventFeatureItem);
+
     return Container(
       width: 240,
       height: 105,
-      padding: EdgeInsets.symmetric(vertical: 14, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 15),
       decoration: BoxDecoration(
           border: Border.all(
             color: AppConstants.tPrimaryColor,
@@ -38,16 +37,16 @@ class EventFeatureCards extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Container(
               child: Image(
-                image: AssetImage(eventFeatureItem.imagePath),
+                image: AssetImage(eventFeatureItem["attachment"]),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           Text(
-            eventFeatureItem.name,
-            style: TextStyle(
+            eventFeatureItem["title"],
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
