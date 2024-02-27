@@ -45,6 +45,7 @@ class Authentication {
       await prefs.setString('userEmail', email);
       await prefs.setString('userPhone', phone);
       await prefs.setString('userPassword', password);
+      await prefs.setBool("isLoggedIn", true);
 
       return true;
     } else {
@@ -86,6 +87,7 @@ class Authentication {
       await prefs.setString('userEmail', mess["userEmail"]);
       await prefs.setString('userPhone', mess["userPhone"]);
       await prefs.setString('userPassword', mess["userPassword"]);
+      await prefs.setBool("isLoggedIn", true);
 
       return true;
     } else {
