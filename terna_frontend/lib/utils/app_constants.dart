@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppConstants {
@@ -5,7 +6,10 @@ class AppConstants {
   static const double appVersion = 2.5;
 
   static const String fontFamily = 'Roboto';
-  
+
+  static const Color themeColor = Color(0xffD91106);
+  static const String IP = "http://192.168.6.186:4000";
+
   /// Shared Key
   static const String theme = '6ammart_theme';
   static const String token = '6ammart_token';
@@ -37,6 +41,4 @@ class AppConstants {
   static const String latitude = 'latitude';
   static const String longitude = 'longitude';
   static const String cookiesManagement = 'cookies_management';
-
-
 }

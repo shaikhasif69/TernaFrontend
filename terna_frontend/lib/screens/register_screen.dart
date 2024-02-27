@@ -1,19 +1,33 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terna_frontend/screens/dashboard.dart';
-import 'package:terna_frontend/screens/register_screen.dart';
+import 'package:terna_frontend/screens/login_screen.dart';
 import 'package:terna_frontend/services/Authentication.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
 import 'package:terna_frontend/utils/button.dart';
 import 'package:terna_frontend/utils/text_field.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final phoneController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  LoginPage({super.key});
+  // void registerUser() async {
 
-  void signInMethod() {}
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -80,22 +94,33 @@ class LoginPage extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             const Text(
-                              "Login Now",
+                              "Register Now",
                               style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const SizedBox(
                               height: 10,
                             ),
                             myTextField(
                               controller: emailController,
                               hintText: "Email",
+                              obscureText: false,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            myTextField(
+                              controller: phoneController,
+                              hintText: "Phone",
                               obscureText: false,
                             ),
                             const SizedBox(
@@ -108,15 +133,6 @@ class LoginPage extends StatelessWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 25.0),
-                                  child: Text("Forgot Password?"),
-                                )
-                              ],
-                            ),
 
                             //forgot password?
                             const SizedBox(
@@ -124,11 +140,12 @@ class LoginPage extends StatelessWidget {
                             ),
 
                             MyButton(
-                              text: "Sign In",
+                              text: "Create Account",
                               onTap: () async {
                                 bool isLoggedIn =
-                                    await Authentication.loginUser(
+                                    await Authentication.registerUser(
                                         emailController.text,
+                                        phoneController.text,
                                         passwordController.text);
 
                                 if (isLoggedIn) {
@@ -143,11 +160,15 @@ class LoginPage extends StatelessWidget {
                               },
                             ),
 
+                            // const SizedBox(
+                            //   height: 40,
+                            // ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  "Not a member?",
+                                  "Already a member?",
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 TextButton(
@@ -156,19 +177,19 @@ class LoginPage extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            RegisterPage(),
+                                            LoginPage(),
                                       ),
                                     );
                                   },
                                   child: const Text(
-                                    "Register now",
+                                    "Sign In",
                                     style: TextStyle(
                                         color: Colors.blue, fontSize: 18),
                                   ),
                                 )
                               ],
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 10,
                             ),
                           ],
