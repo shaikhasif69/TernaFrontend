@@ -17,6 +17,9 @@ class Dimensions {
   static const double paddingSizeExtraLarge = 25.0;
   static const double paddingSizeExtremeLarge = 30.0;
 
+  static const double tFormHeight = 100;
+  static const double tDefaultSize = 10.0;
+
   static const double radiusSmall = 5.0;
   static const double radiusDefault = 10.0;
   static const double radiusLarge = 15.0;
