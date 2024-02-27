@@ -11,6 +11,7 @@ class AppConstants {
 
   static const Color themeColor = Color(0xffD91106);
   static const String IP = "http://192.168.6.186:4000";
+  static String eventAttachments = "http://${IP}/images/";
   // colours
   static const Color tPrimaryColor =
       Color.fromARGB(255, 201, 126, 126); // Replace 0xFF with the opacity value
@@ -18,6 +19,10 @@ class AppConstants {
   static const Color extraColor = Color(0xFFB5C0D0);
   static const Color extraColor2 = Color(0xFFFFF7F1);
   static const Color myColor = Color(0xFFFFF2F2);
+  static const Color greenColor = Color(0xFFDCFFB7);
+  static const Color blueColor = Color(0xFF40DFEF);
+  static const Color something = Color(0xFFFF6363);
+  static const Color darkBlue = Color(0xFF1D2B53);
 
   /// Shared Key
   static const String theme = '6ammart_theme';
