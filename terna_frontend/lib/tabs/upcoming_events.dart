@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class UpComingEvents extends StatefulWidget {
   final String eventName;
   final String eventSubTitle;
   final String eventImage;
-  final int eventStartDate;
+  final String eventStartDate;
 
   UpComingEvents({
     required this.eventName,
@@ -24,7 +25,6 @@ class _UpComingEventsState extends State<UpComingEvents> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
-        // padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
             color: AppConstants.myColor,
             border: Border.all(color: AppConstants.extraColor),
@@ -38,24 +38,37 @@ class _UpComingEventsState extends State<UpComingEvents> {
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
                     width: 110,
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(14),
                     height: 120,
-                    // color: Colors.grey[300],
-                    child: Image.asset(widget.eventImage),
+                    child: FadeInImage.memoryNetwork(
+                      fit: BoxFit.cover,
+                      width: 60,
+                      height: 60,
+                      placeholder: kTransparentImage,
+                      image: "${AppConstants.IP}/images/${widget.eventImage}",
+                    ),
                   ),
                 ),
-                SizedBox(width: 20,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      widget.eventSubTitle,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                      widget.eventName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                      ),
                     ),
-                    Text(widget.eventName),
+                    Container(
+                      width: 180,
+                      child: Text(
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        widget.eventSubTitle,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 16),
+                      ),
+                    ),
                   ],
                 ),
               ],

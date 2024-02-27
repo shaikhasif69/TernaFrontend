@@ -45,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   // EventController eventController = Get.put(EventController());
 
-  Future<dynamic> campaigns = Campaigns.getAllCampaigns();
+  Future<dynamic> campaigns = Campaigns.getLatest5Campaigns();
+  Future<dynamic> upcomingCampaigns = Campaigns.getLatest5UpcomingCampaigns();
 
   @override
   void dispose() {
@@ -90,35 +91,79 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 25,
                   ),
-                  padded(subTitle("Campaigns!")),
+                  padded(
+                    Row(
+                      children: [
+                        const Text(
+                          "Campaigns!",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        const Spacer(),
+                        TextButton(
+                          onPressed: () {
+                            Get.toNamed("/getAllCampaigns");
+                          },
+                          child: const Text(
+                            "See All",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 247, 110, 110),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
                   Container(
-                      height: 105,
-                      child: FutureBuilder(
-                        future: campaigns,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.hasData) {
-                            final posts = snapshot.data!;
-                            return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return EventFeatureCards(
-                                  snapshot.data[index],
-                                  color: AppConstants.tAccentColor,
-                                );
-                              },
+                    height: 105,
+                    child: FutureBuilder(
+                      future: campaigns,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasData) {
+                          final posts = snapshot.data!;
+
+                          if (snapshot.data.length <= 0) {
+                            return const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "No data found",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                )
+                              ],
                             );
-                          } else {
-                            return const Text("No data available");
                           }
-                        },
-                      )),
+
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return EventFeatureCards(
+                                snapshot.data[index],
+                                color: AppConstants.tAccentColor,
+                              );
+                            },
+                          );
+                        } else {
+                          return const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [Text("No data found")],
+                          );
+                        }
+                      },
+                    ),
+                  ),
                   const SizedBox(
                     height: 25,
                   ),
@@ -134,22 +179,94 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // padded(subTitle("Best Selling")),
                   // getHorizontalItemSlider(firstEvent),
-                  padded(subTitle("Upcommig Campaigns")),
+                  padded(
+                    Row(
+                      children: [
+                        const Text(
+                          "Upcoming Campaigns!",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        const Spacer(),
+                        TextButton(
+                          onPressed: () {
+                            Get.toNamed("/getAllUpcomingCampaigns");
+                          },
+                          child: const Text(
+                            "See All",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 247, 110, 110),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: ListView.builder(
-                          itemCount: 4,
-                          itemBuilder: (context, index) {
-                            return UpComingEvents(
-                              eventName: upcomingevent[index][0],
-                              eventSubTitle: upcomingevent[index][1],
-                              eventImage: upcomingevent[index][2],
-                              eventStartDate: upcomingevent[index][3],
-                            );
-                          }),
-                    ),
+                        padding: const EdgeInsets.all(15.0),
+                        child: FutureBuilder(
+                          future: upcomingCampaigns,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasData) {
+                              final posts = snapshot.data!;
+
+                              if (snapshot.data.length <= 0) {
+                                return const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "No data found",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    )
+                                  ],
+                                );
+                              }
+
+                              return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return UpComingEvents(
+                                    eventName: snapshot.data[index]["title"],
+                                    eventSubTitle: snapshot.data[index]
+                                        ["description"],
+                                    eventImage: snapshot.data[index]
+                                        ["attachment"],
+                                    eventStartDate: snapshot.data[index]
+                                        ["startDate"],
+                                  );
+                                },
+                              );
+                            } else {
+                              return const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [Text("No data found")],
+                              );
+                            }
+                          },
+                        )
+
+                        // child: ListView.builder(
+                        //     itemCount: 4,
+                        //     itemBuilder: (context, index) {
+                        //       return UpComingEvents(
+                        //         eventName: upcomingevent[index][0],
+                        //         eventSubTitle: upcomingevent[index][1],
+                        //         eventImage: upcomingevent[index][2],
+                        //         eventStartDate: upcomingevent[index][3],
+                        //       );
+                        //     }),
+                        ),
                   ),
 
                   const SizedBox(
@@ -174,42 +291,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: widget,
     );
   }
-
-  // _listPopularEvent(List<MyEvent> events) => Container(
-  //       width: double.infinity,
-  //       height: 270,
-  //       padding: const EdgeInsets.only(left: 16),
-  //       child: ListView.builder(
-  //         physics: const BouncingScrollPhysics(),
-  //         scrollDirection: Axis.horizontal,
-  //         itemCount: events.length,
-  //         itemBuilder: (context, index) {
-  //           print("heuyu");
-  //           print(events.length);
-  //           return GestureDetector(
-  //             // onTap: () => Navigator.pushNamed(
-  //             //   arguments: events[index].toJson(),
-  //             //   context,
-  //             //   (),
-  //             // ),
-  //             // onTap: () {
-  //             //   Get.toNamed('/eventDeatilsPage',
-  //             //       arguments: events[index].toJson());
-  //             // },
-  //             onTap: () {
-  //               print(events[index].toJson());
-  //               print('----++++++++++++++++++++++++__________');
-  //               // MyEvent event = MyEvent.fromJson(events[index].toJson());
-  //               Get.to(DetailPage(data: events[index].toJson()));
-  //             },
-  //             // Get.toNamed('/eventDetailPage' , arguments: )
-  //             child: CardPopularEvent(
-  //               eventModel: events[index],
-  //             ),
-  //           );
-  //         },
-  //       ),
-  //     );
 
   // Widget getHorizontalItemSlider(List<Events> items) {
   Widget subTitle(String text) {

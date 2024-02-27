@@ -42,6 +42,7 @@ dependencies:
   line_awesome_flutter: ^2.0.0
   flutter_svg: ^2.0.10+1
   font_awesome_flutter: ^10.7.0
+  transparent_image: ^2.0.1
 
 dev_dependencies:
   flutter_test:

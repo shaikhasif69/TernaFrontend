@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:terna_frontend/screens/all_campaigns.dart';
+import 'package:terna_frontend/screens/all_upcoming_campaigns.dart';
 import 'package:terna_frontend/screens/login_screen.dart';
 
 import '../screens/home_screen.dart';
@@ -19,6 +21,10 @@ class AppRoutes {
     // GetPage(name: "/addEvent", page: () => AddEvent()),
     // GetPage(name:"/addTaskandManager",page:()=>addTaskandManager()),
     GetPage(name: '/userDashboard', page: () => UserDashBoard()),
+    GetPage(name: '/getAllCampaigns', page: () => AllCampaigns()),
+    GetPage(
+        name: '/getAllUpcomingCampaigns',
+        page: () => AllUpcomingCampaignsPage())
 
     // GetPage(
     //     name: '/eventDeatilsPage',
