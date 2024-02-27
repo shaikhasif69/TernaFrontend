@@ -11,6 +11,8 @@ class AppConstants {
 
   static const Color themeColor = Color(0xffD91106);
   static const String IP = "http://192.168.6.186:4000";
+    static String eventAttachments =
+      "http://${IP}/media/Events/EventAttachments/";
   // colours
   static const Color tPrimaryColor =
       Color.fromARGB(255, 201, 126, 126); // Replace 0xFF with the opacity value

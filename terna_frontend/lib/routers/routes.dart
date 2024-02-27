@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:terna_frontend/screens/login_screen.dart';
+import 'package:terna_frontend/tabs/search_location_widget.dart';
 
 import '../screens/home_screen.dart';
 import '../tabs/dashboard_nav.dart';
@@ -11,6 +12,7 @@ class AppRoutes {
     GetPage(name: '/', page: () => SplashScreen()),
     // GetPage(name: '/introPage', page: () => IntroScreenPage()),
     GetPage(name: '/login', page: () => LoginPage()),
+    GetPage(name:'/searchLocation', page: ()=> SearchLocationWidget()), 
     // GetPage(name: '/userDashboard', page: () => UserDashBoard()),
     // GetPage(name: "/userRegisteration", page: () => UserReg()),
     // GetPage(name: "/managerDashboard", page: () => ManagerDashboard()),

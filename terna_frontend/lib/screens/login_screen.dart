@@ -136,6 +136,12 @@ class LoginPage extends StatelessWidget {
                                 }
                               },
                             ),
+                            // MyButton(
+                            //   text: "Sign In",
+                            //   onTap: () async {
+                            //    Get.toNamed('/searchLocation');
+                            //   },
+                            // ),
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
