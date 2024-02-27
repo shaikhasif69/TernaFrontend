@@ -1,10 +1,7 @@
-import 'dart:convert';
+import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:terna_frontend/screens/dashboard.dart';
 import 'package:terna_frontend/screens/login_screen.dart';
 import 'package:terna_frontend/services/Authentication.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
@@ -149,13 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         passwordController.text);
 
                                 if (isLoggedIn) {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          const Dashboard(),
-                                    ),
-                                  );
+                                  Get.toNamed("/userDashboard");
                                 }
                               },
                             ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:terna_frontend/screens/home_screen.dart';
-import 'package:terna_frontend/screens/signup_screen.dart';
 import 'package:terna_frontend/tabs/dashboard_nav.dart';
 
 import 'routers/routes.dart';
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.amber),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/userDashboard",
+      initialRoute: "/",
       getPages: AppRoutes.generateRoutes,
     );
   }

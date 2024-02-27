@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:terna_frontend/screens/dashboard.dart';
 import 'package:terna_frontend/screens/register_screen.dart';
 import 'package:terna_frontend/services/Authentication.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
 import 'package:terna_frontend/utils/button.dart';
 import 'package:terna_frontend/utils/text_field.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
   final emailController = TextEditingController();
@@ -132,13 +132,7 @@ class LoginPage extends StatelessWidget {
                                         passwordController.text);
 
                                 if (isLoggedIn) {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          const Dashboard(),
-                                    ),
-                                  );
+                                  Get.toNamed("/userDashboard");
                                 }
                               },
                             ),

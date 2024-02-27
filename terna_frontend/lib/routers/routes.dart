@@ -4,10 +4,11 @@ import 'package:terna_frontend/screens/login_screen.dart';
 
 import '../screens/home_screen.dart';
 import '../tabs/dashboard_nav.dart';
+import '../screens/splash_screen.dart';
 
 class AppRoutes {
   static List<GetPage> generateRoutes = [
-    // GetPage(name: '/', page: () => SplashScreen()),
+    GetPage(name: '/', page: () => SplashScreen()),
     // GetPage(name: '/introPage', page: () => IntroScreenPage()),
     GetPage(name: '/login', page: () => LoginPage()),
     // GetPage(name: '/userDashboard', page: () => UserDashBoard()),
@@ -18,7 +19,6 @@ class AppRoutes {
     // GetPage(name: "/addEvent", page: () => AddEvent()),
     // GetPage(name:"/addTaskandManager",page:()=>addTaskandManager()),
     GetPage(name: '/userDashboard', page: () => UserDashBoard()),
-
 
     // GetPage(
     //     name: '/eventDeatilsPage',

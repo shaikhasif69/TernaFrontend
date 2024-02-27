@@ -115,7 +115,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -129,7 +128,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.2.4"
-=======
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -138,7 +136,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.7.0"
->>>>>>> 8ff7ab4cc1663a6b5df5ac4f3a55b254ab12ab1d
   get:
     dependency: "direct main"
     description:
@@ -147,7 +144,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.6"
-<<<<<<< HEAD
   google_fonts:
     dependency: "direct main"
     description:
@@ -164,16 +160,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
-=======
-  http:
-    dependency: transitive
-    description:
-      name: http
-      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
->>>>>>> 8ff7ab4cc1663a6b5df5ac4f3a55b254ab12ab1d
   http_parser:
     dependency: transitive
     description:
@@ -182,7 +168,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-<<<<<<< HEAD
   leak_tracker:
     dependency: transitive
     description:
@@ -207,7 +192,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-=======
   line_awesome_flutter:
     dependency: "direct main"
     description:
@@ -216,7 +200,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
->>>>>>> 8ff7ab4cc1663a6b5df5ac4f3a55b254ab12ab1d
   lints:
     dependency: transitive
     description:
@@ -256,8 +239,15 @@ packages:
       sha256: "087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af"
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
     version: "1.9.0"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      sha256: e3e67b1629e6f7e8100b367d3db6ba6af4b1f0bb80f64db18ef1fbabd2fa9ccf
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   path_provider:
     dependency: transitive
     description:
@@ -306,6 +296,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
+  petitparser:
+    dependency: transitive
+    description:
+      name: petitparser
+      sha256: c15605cd28af66339f8eb6fbe0e541bfe2d1b72d5825efc6598f3e0a31b9ad27
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.2"
   platform:
     dependency: transitive
     description:
@@ -378,25 +376,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
-=======
-    version: "1.8.3"
-  path_parsing:
-    dependency: transitive
-    description:
-      name: path_parsing
-      sha256: e3e67b1629e6f7e8100b367d3db6ba6af4b1f0bb80f64db18ef1fbabd2fa9ccf
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
-  petitparser:
-    dependency: transitive
-    description:
-      name: petitparser
-      sha256: cb3798bef7fc021ac45b308f4b51208a152792445cce0448c9a4ba5879dd8750
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.4.0"
->>>>>>> 8ff7ab4cc1663a6b5df5ac4f3a55b254ab12ab1d
   sky_engine:
     dependency: transitive
     description: flutter
@@ -449,11 +428,7 @@ packages:
       sha256: "5c2f730018264d276c20e4f1503fd1308dfbbae39ec8ee63c5236311ac06954b"
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
     version: "0.6.1"
-=======
-    version: "0.6.0"
->>>>>>> 8ff7ab4cc1663a6b5df5ac4f3a55b254ab12ab1d
   typed_data:
     dependency: transitive
     description:
@@ -462,8 +437,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
-<<<<<<< HEAD
-=======
   vector_graphics:
     dependency: transitive
     description:
@@ -488,7 +461,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.11+1"
->>>>>>> 8ff7ab4cc1663a6b5df5ac4f3a55b254ab12ab1d
   vector_math:
     dependency: transitive
     description:
@@ -512,7 +484,6 @@ packages:
       sha256: "1d9158c616048c38f712a6646e317a3426da10e884447626167240d45209cbad"
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
     version: "0.5.0"
   win32:
     dependency: transitive
@@ -530,17 +501,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-=======
-    version: "0.1.4-beta"
   xml:
     dependency: transitive
     description:
       name: xml
-      sha256: "5bc72e1e45e941d825fd7468b9b4cc3b9327942649aeb6fc5cdbf135f0a86e84"
+      sha256: b015a8ad1c488f66851d762d3090a21c600e479dc75e68328c52774040cf9226
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
->>>>>>> 8ff7ab4cc1663a6b5df5ac4f3a55b254ab12ab1d
+    version: "6.5.0"
 sdks:
   dart: ">=3.3.0 <4.0.0"
   flutter: ">=3.19.0"
