@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
-
-
 
 class DetailPage extends StatefulWidget {
   Map data;
@@ -14,7 +13,6 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   var startDate;
-  var ha = 'haha';
   Map data;
   _DetailPageState({required this.data});
   @override
@@ -22,25 +20,14 @@ class _DetailPageState extends State<DetailPage> {
     // print(ModalRoute.of(context));
     print('-----++++++++++++++++++------');
     print(data);
-    startDate = data['eventStartDate'];
+    startDate = data['startDate'];
     print('((((((((((((((((())))))))))))))))))))');
-    print(startDate.substring(1, 3));
+    // print(startDate.substring(1, 3));
     print('dateeeeeeeeeeeeee');
-    print(data['eventStartDate']);
-    print(ha);
+    print(data['startDate']);
 
-    // print(firstEvent[0]);
-    // var eventData = {'asif': 'mehereen'};
-    // final Map<String, dynamic> eventData = firstEvent[0];
-
-    // final Map<String, dynamic> eventData =
-    //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    print('what is eventdata here: ? ');
-    // print(eventData);
-    // final MyEvent eventModel = MyEvent.fromJson(eventData);
     return Scaffold(
-      // AppBar('hey'),
-      // const PreferredSize(preferredSize: Size(0, 0), child: CustomAppBar()),
+      backgroundColor: Color.fromARGB(255, 250, 236, 236),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -77,19 +64,20 @@ class _DetailPageState extends State<DetailPage> {
         child: Container(
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 16),
-          decoration:
-              const BoxDecoration(color: AppConstants.tPrimaryColor),
+          decoration: const BoxDecoration(color: AppConstants.something),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    data['eventType'].toString(),
+                    "A motivation message here!",
                     style: TextStyle(
-                        fontSize: 12, color: AppConstants.extraColor2),
+                        fontSize: 16,
+                        color: AppConstants.darkBlue,
+                        fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(height: 6),
                   Row(
@@ -97,7 +85,7 @@ class _DetailPageState extends State<DetailPage> {
                       Text(
                         'joinUS',
                         style: TextStyle(
-                          color: AppConstants.extraColor,
+                          color: AppConstants.blueColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
@@ -106,8 +94,7 @@ class _DetailPageState extends State<DetailPage> {
                       Text(
                         "/Person",
                         style: TextStyle(
-                            fontSize: 12,
-                            color: AppConstants.myColor),
+                            fontSize: 12, color: AppConstants.myColor),
                       )
                     ],
                   )
@@ -121,7 +108,7 @@ class _DetailPageState extends State<DetailPage> {
                 //   arguments: eventModel.toJson(),
                 // ),
                 style: ElevatedButton.styleFrom(
-                    primary: AppConstants.tAccentColor,
+                    primary: AppConstants.greenColor,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
@@ -129,9 +116,9 @@ class _DetailPageState extends State<DetailPage> {
                         vertical: 10, horizontal: 20),
                     maximumSize: const Size(200, 150)),
                 child: const Text(
-                  "Get a Ticket",
+                  "Register",
                   style: TextStyle(
-                      color: AppConstants.extraColor2, fontSize: 16),
+                      color: Color.fromARGB(255, 0, 0, 0), fontSize: 16),
                 ),
               )
             ],
@@ -153,11 +140,12 @@ class _DetailPageState extends State<DetailPage> {
             height: 310,
             margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
             decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 191, 192, 195),
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                    AppConstants.eventAttachments + data['eventImages'][0]),
+                    AppConstants.eventAttachments + data["attachment"]),
                 // image: NetworkImage(
                 //   data['eventImages'][0]!,
                 // ),
@@ -171,7 +159,7 @@ class _DetailPageState extends State<DetailPage> {
               height: 65,
               width: 48,
               decoration: BoxDecoration(
-                color: AppConstants.extraColor,
+                color: const Color.fromARGB(255, 124, 168, 234),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -213,8 +201,8 @@ class _DetailPageState extends State<DetailPage> {
                         color: AppConstants.extraColor2,
                       ),
                       child: Text(
-                        data['eventName']!,
-                        style: const TextStyle(
+                        data['title']!,
+                        style: GoogleFonts.oswald(
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
                             color: AppConstants.tPrimaryColor),
@@ -232,10 +220,10 @@ class _DetailPageState extends State<DetailPage> {
                         Container(
                           width: 320,
                           child: Text(
-                            data['eventLocation']['address'],
-                            // data['eventLocation']['address'],
-                            style: const TextStyle(
-                                color: AppConstants.tPrimaryColor, fontSize: 16),
+                            data['address'],
+                            style: GoogleFonts.openSans(
+                                color: AppConstants.tPrimaryColor,
+                                fontSize: 16),
                           ),
                         )
                       ],
@@ -268,20 +256,22 @@ class _DetailPageState extends State<DetailPage> {
             //   positionText: 100,
             // ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               "Description",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             const SizedBox(height: 6),
             RichText(
               textAlign: TextAlign.justify,
               text: TextSpan(
-                text: data['eventDiscription']!,
-                style: const TextStyle(
-                  color: AppConstants.myColor,
+                text: data['description']!,
+                style: GoogleFonts.poppins(
+                  color: Color.fromARGB(255, 60, 59, 59),
                   fontSize: 14,
                   height: 1.75,
                 ),

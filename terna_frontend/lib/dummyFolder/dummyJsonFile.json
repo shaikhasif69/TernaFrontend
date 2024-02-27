@@ -1,0 +1,22 @@
+{
+    "title": "Sample Campaign",
+    "description": "This is a sample campaign description.",
+    "attachment": "https://example.com/image.jpg",
+    "startDate": "2023-10-15",
+    "endDate": "2023-10-20",
+    "address": "123 Main St, City, Country",
+    "lat": "40.7128",
+    "long": "-74.0060",
+    "participants": [
+      {
+        "name": "Participant 1",
+        "email": "participant1@example.com"
+      },
+      {
+        "name": "Participant 2",
+        "email": "participant2@example.com"
+      }
+    ],
+    "createdDate": "2023-10-10T08:00:00Z"
+  }
+  

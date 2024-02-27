@@ -10,6 +10,7 @@ import 'package:terna_frontend/utils/app_constants.dart';
 import '../tabs/event_featured_item.dart';
 import '../tabs/upcoming_events.dart';
 import '../utils/app_banner.dart';
+import 'campaign_details_page.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -108,9 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               scrollDirection: Axis.horizontal,
                               itemCount: snapshot.data.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return EventFeatureCards(
-                                  snapshot.data[index],
-                                  color: AppConstants.tAccentColor,
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.to(DetailPage(data: snapshot.data[index]));
+                                  },
+                                  child: EventFeatureCards(
+                                    snapshot.data[index],
+                                    color: AppConstants.tAccentColor,
+                                  ),
                                 );
                               },
                             );
