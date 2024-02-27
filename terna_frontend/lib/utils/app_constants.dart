@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
 
 class AppConstants {
@@ -5,7 +7,14 @@ class AppConstants {
   static const double appVersion = 2.5;
 
   static const String fontFamily = 'Roboto';
-  
+  // colours
+  static const Color tPrimaryColor =
+      Color.fromARGB(255, 201, 126, 126); // Replace 0xFF with the opacity value
+  static const Color tAccentColor = Color(0xFFF15A59);
+  static const Color extraColor = Color(0xFFB5C0D0);
+  static const Color extraColor2 = Color(0xFFFFF7F1);
+  static const Color myColor = Color(0xFFFFF2F2);
+
   /// Shared Key
   static const String theme = '6ammart_theme';
   static const String token = '6ammart_token';
@@ -37,6 +46,4 @@ class AppConstants {
   static const String latitude = 'latitude';
   static const String longitude = 'longitude';
   static const String cookiesManagement = 'cookies_management';
-
-
 }
