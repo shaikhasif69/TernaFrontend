@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 import 'dart:developer';
 
 class Authentication {
-  static Future<bool> registerUser(email, phone, password) async {
+  static Future<bool> registerUser(
+      name, email, phone, password, bloodGrp) async {
     print("Called");
     Map<String, String>? location = await getLocation();
     log(name: "this is the location: ", location.toString());
@@ -20,11 +21,13 @@ class Authentication {
         ),
         body: jsonEncode(
           {
+            "userName": name,
             "userEmail": email,
             "userPhone": "+91" + phone,
             "userPassword": password,
             "latitude": location['latitude'],
             "longitude": location['longitude'],
+            "bloodGroup": bloodGrp,
           },
         ),
         headers: {"Content-Type": "application/json"},
@@ -39,6 +42,8 @@ class Authentication {
       await prefs.setString('userEmail', email);
       await prefs.setString('userPhone', phone);
       await prefs.setString('userPassword', password);
+      await prefs.setString('userLat', location['latitude']!);
+      await prefs.setString('userLat', location['longitude']!);
       await prefs.setBool("isLoggedIn", true);
 
       if (mess == "ok") {
@@ -159,7 +164,6 @@ class Authentication {
       }
 
       // Rest of your code...
-    } 
+    }
   }
 }
-

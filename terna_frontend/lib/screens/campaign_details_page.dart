@@ -1,23 +1,56 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:terna_frontend/models/Campaign.dart';
+import 'package:terna_frontend/services/Campaigns.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class DetailPage extends StatefulWidget {
   Map data;
-  DetailPage({required this.data});
+  String? userId;
+
+  DetailPage({required this.data, required this.userId});
 
   @override
   State<DetailPage> createState() => _DetailPageState(data: data);
 }
 
 class _DetailPageState extends State<DetailPage> {
+  // late QrCode qrCode;
+
+  // @protected
+  // late QrImage qrImage;
+
   var startDate;
+  bool? resultValue; // Default value or whatever makes sense in your context
+
   Map data;
   _DetailPageState({required this.data});
   @override
+  void initState() {
+    super.initState();
+    print("Called");
+
+    // Call the asynchronous function in initState to ensure it is only called once
+    Campaigns.checkIfAlreadyRegistered(widget.userId!, data["_id"]).then(
+      (value) => setState(
+        () {
+          resultValue = value;
+        },
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print("this is the value : aahhhhhhhhhhhh: " + resultValue.toString());
     // print(ModalRoute.of(context));
     print('-----++++++++++++++++++------');
     print(data);
@@ -25,7 +58,35 @@ class _DetailPageState extends State<DetailPage> {
     print('((((((((((((((((())))))))))))))))))))');
     // print(startDate.substring(1, 3));
     print('dateeeeeeeeeeeeee');
-    print(data['startDate']);
+    // dynamic value = jsonDecode(data["participants"]);
+    print("this the value : " + data["participants"][0]["userId"]);
+    // print("this is value: " + value["userId"]);
+
+    print("hell");
+
+    // someFunction();
+    // int resultValue =
+    //     0; // Default value or whatever makes sense in your context
+
+    // Campaigns.checkIfAlreadyRegistered(widget.userId!, data["_id"])
+    //     .then((result) {
+    //   resultValue = result;
+
+    //   // Now you can use the resultValue in your conditions or wherever you need it
+    //   if (resultValue == 1) {
+    //     // Do something
+    //     print("hurray working!");
+    //     resultValue = 1;
+    //   } else {
+    //     // Do something else
+    //     print('hurray but in sad:');
+    //     resultValue = 0;
+    //   }
+
+    // Continue with the rest of your code...
+    // });
+
+    print("this is teh value: " + resultValue.toString());
 
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 250, 236, 236),
@@ -101,27 +162,111 @@ class _DetailPageState extends State<DetailPage> {
                   )
                 ],
               ),
-              ElevatedButton(
-                onPressed: () {},
-                // onPressed: () => Navigator.pushNamed(
-                //   context,
-                //   NamedRoutes.ticketScreen,
-                //   arguments: eventModel.toJson(),
-                // ),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: AppConstants.greenColor,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
-                    maximumSize: const Size(200, 150)),
-                child: const Text(
-                  "Register",
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0), fontSize: 16),
-                ),
-              )
+              resultValue != null && resultValue == true
+                  ? Container(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppConstants.blueColor,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 20),
+                          // maximumSize: const Size(200, 150),
+                        ),
+                        onPressed: () async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+
+                          var userId = prefs.getString("userId");
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Scaffold(
+                                body: Center(
+                                    child: Column(
+                                  children: [
+                                    QrImageView(
+                                      data: userId.toString(),
+                                      size: 280,
+                                      embeddedImageStyle: QrEmbeddedImageStyle(
+                                          // size: Size(
+                                          //   100,
+
+                                          // )
+                                          // size: const Size(
+                                          //   100,
+                                          //   100,
+                                          // ),
+                                          ),
+                                    )
+                                  ],
+                                )),
+                              );
+                            },
+                          );
+                        },
+                        child: Text(
+                          "Show QR",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 16),
+                        ),
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () async {
+                        // fetch User id from shared pref
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+
+                        var userId = prefs.getString("userId");
+                        var campaignId = data["_id"];
+
+                        bool result = await Campaigns.registerParticipants(
+                            userId!, campaignId);
+
+                        if (result == true) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Container(
+                                height: 80,
+                                child: const Text(
+                                  "You have been successfully registered",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              action: SnackBarAction(
+                                label: 'Okay',
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                },
+                              ),
+                            ),
+                          );
+
+                          Get.toNamed("/userDashboard");
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppConstants.greenColor,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 20),
+                        // maximumSize: const Size(200, 150),
+                      ),
+                      child: Text(
+                        "Register",
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                    )
             ],
           ),
         ),
@@ -153,9 +298,9 @@ class _DetailPageState extends State<DetailPage> {
             //   ),
             // ),
             child: FadeInImage.memoryNetwork(
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
               width: 80,
-              height: 80,
+              height: 50,
               placeholder: kTransparentImage,
               image: "${AppConstants.IP}/images/${data["attachment"]}",
             ),

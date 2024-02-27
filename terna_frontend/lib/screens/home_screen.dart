@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terna_frontend/models/Campaign.dart';
 import 'package:terna_frontend/services/Campaigns.dart';
 import 'package:terna_frontend/tabs/search_bar_widget.dart';
@@ -19,35 +21,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // final DetailPage args = Get.arguments;
-  final List upcomingevent = [
-    ['Rock Bhai', 'A rap show of the year', 'assets/dummyImages/rap.jpg', 90],
-    [
-      'Dance Nachle',
-      'Show your moves!',
-      'assets/dummyImages/danceNachle.jpg',
-      90
-    ],
-    ['King...', 'Tu ake dekhle', 'assets/dummyImages/king.jpg', 90],
-    [
-      'Chalo Kashmir',
-      'An beautiful trip to kashmir',
-      'assets/dummyImages/kashmir.jpg',
-      90
-    ],
-    ['Diwali Dhamaka', 'Movie Director', 'assets/dummyImages/diwali.jpg', 90],
-    [
-      'Chalo Bharat',
-      'Unite the country, walk with us!',
-      'assets/dummyImages/walk.jpg',
-      90
-    ],
-    ['penguin', 'Save Penguin', 'assets/dummyImages/penguin.jpg', 90],
-    ['KBC', 'Kuan banega ... C', 'assets/dummyImages/kbc.jpg', 90],
-  ];
-  // EventController eventController = Get.put(EventController());
+  String? _currentAddress;
+  Position? _currentPosition;
 
   Future<dynamic> campaigns = Campaigns.getLatest5Campaigns();
   Future<dynamic> upcomingCampaigns = Campaigns.getLatest5UpcomingCampaigns();
+  // Future<dynamic> nearbyCampaigns = Campaigns.getNearByCampaigns(_currentPosition!.latitude, );
 
   @override
   void dispose() {
@@ -151,8 +130,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
-                                onTap: () => Get.to(
-                                    DetailPage(data: snapshot.data[index])),
+                                onTap: () async {
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  String? userId = prefs.getString("userId");
+
+                                  Get.to(DetailPage(
+                                      data: snapshot.data[index],
+                                      userId: userId!));
+                                },
                                 child: EventFeatureCards(
                                   snapshot.data[index],
                                   color: AppConstants.tAccentColor,
@@ -176,9 +163,70 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Obx(() => eventController.isLoading == true
-                  //     ? CircularProgressIndicator()
-                  //     : _listPopularEvent(eventController.eventList)),
+                  // Container(
+                  //   height: MediaQuery.of(context).size.height * 0.3,
+                  //   child: Padding(
+                  //       padding: const EdgeInsets.all(15.0),
+                  //       child: FutureBuilder(
+                  //         future: nearbyCampaigns,
+                  //         builder: (context, snapshot) {
+                  //           if (snapshot.connectionState ==
+                  //               ConnectionState.waiting) {
+                  //             return const CircularProgressIndicator();
+                  //           } else if (snapshot.hasData) {
+                  //             final posts = snapshot.data!;
+
+                  //             if (snapshot.data.length <= 0) {
+                  //               return const Column(
+                  //                 mainAxisAlignment: MainAxisAlignment.center,
+                  //                 children: [
+                  //                   Text(
+                  //                     "No data found",
+                  //                     style: TextStyle(
+                  //                       fontSize: 18,
+                  //                       fontWeight: FontWeight.w400,
+                  //                     ),
+                  //                   )
+                  //                 ],
+                  //               );
+                  //             }
+
+                  //             return ListView.builder(
+                  //               scrollDirection: Axis.vertical,
+                  //               itemCount: snapshot.data.length,
+                  //               itemBuilder: (BuildContext context, int index) {
+                  //                 return UpComingEvents(
+                  //                   eventName: snapshot.data[index]["title"],
+                  //                   eventSubTitle: snapshot.data[index]
+                  //                       ["description"],
+                  //                   eventImage: snapshot.data[index]
+                  //                       ["attachment"],
+                  //                   eventStartDate: snapshot.data[index]
+                  //                       ["startDate"],
+                  //                 );
+                  //               },
+                  //             );
+                  //           } else {
+                  //             return const Column(
+                  //               mainAxisAlignment: MainAxisAlignment.center,
+                  //               children: [Text("No data found")],
+                  //             );
+                  //           }
+                  //         },
+                  //       )
+
+                  //       // child: ListView.builder(
+                  //       //     itemCount: 4,
+                  //       //     itemBuilder: (context, index) {
+                  //       //       return UpComingEvents(
+                  //       //         eventName: upcomingevent[index][0],
+                  //       //         eventSubTitle: upcomingevent[index][1],
+                  //       //         eventImage: upcomingevent[index][2],
+                  //       //         eventStartDate: upcomingevent[index][3],
+                  //       //       );
+                  //       //     }),
+                  //       ),
+                  // ),
                   const SizedBox(
                     height: 150,
                   ),

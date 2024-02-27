@@ -7,11 +7,19 @@ import 'package:terna_frontend/utils/button.dart';
 import 'package:terna_frontend/utils/text_field.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  LoginPage({super.key});
+  final nameController = TextEditingController();
 
   void signInMethod() {}
 
@@ -90,6 +98,7 @@ class LoginPage extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+
                             SizedBox(
                               height: 10,
                             ),
@@ -108,6 +117,7 @@ class LoginPage extends StatelessWidget {
                             const SizedBox(
                               height: 10,
                             ),
+
                             const Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [

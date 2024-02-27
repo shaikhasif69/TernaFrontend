@@ -3,21 +3,19 @@ import 'package:terna_frontend/services/Campaigns.dart';
 import 'package:terna_frontend/tabs/event_featured_item.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
 
-class AllCampaigns extends StatefulWidget {
-  const AllCampaigns({super.key});
-
-  @override
-  State<AllCampaigns> createState() => _AllCampaignsState();
-}
-
-class _AllCampaignsState extends State<AllCampaigns> {
-  Future<dynamic> campaigns = Campaigns.getAllCampaigns();
+class RegisteredCampaigns extends StatelessWidget {
+  String? userId;
+  RegisteredCampaigns({required this.userId, super.key});
 
   @override
   Widget build(BuildContext context) {
+    Future<dynamic> campaigns = Campaigns.getRegisteredCampaignsOfUsers(userId);
+    print("hello");
+    print(campaigns);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("All Campaigns!"),
+        title: const Text("Your Registered Campaigns!"),
       ),
       body: FutureBuilder(
         future: campaigns,
@@ -30,17 +28,15 @@ class _AllCampaignsState extends State<AllCampaigns> {
             final posts = snapshot.data!;
 
             if (snapshot.data.length <= 0) {
-              return const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "No data found",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  )
-                ],
+              return const Center(
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "No data found",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               );
             }
 
@@ -60,9 +56,15 @@ class _AllCampaignsState extends State<AllCampaigns> {
               },
             );
           } else {
-            return const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("No data found")],
+            return const Center(
+              child: Text(
+                textAlign: TextAlign.center,
+                "No data found",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             );
           }
         },

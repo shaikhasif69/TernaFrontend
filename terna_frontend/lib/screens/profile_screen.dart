@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:terna_frontend/screens/registered_campaigns.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
 import 'package:terna_frontend/utils/dimensions.dart';
 import 'package:terna_frontend/utils/profile_menu_widgets.dart';
 
 import 'update_profile_screen.dart';
-
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -16,16 +17,21 @@ class ProfileScreen extends StatelessWidget {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(LineAwesomeIcons.angle_left)),
         title: Text("tProfile", style: Theme.of(context).textTheme.headline4),
-        actions: [IconButton(onPressed: () {}, icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))],
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(Dimensions.tDefaultSize),
           child: Column(
             children: [
-
               /// -- IMAGE
               Stack(
                 children: [
@@ -33,7 +39,9 @@ class ProfileScreen extends StatelessWidget {
                     width: 120,
                     height: 120,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100), child: const Image(image: AssetImage("assets/google.png"))),
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Image(
+                            image: AssetImage("assets/images/google.png"))),
                   ),
                   Positioned(
                     bottom: 0,
@@ -41,7 +49,9 @@ class ProfileScreen extends StatelessWidget {
                     child: Container(
                       width: 35,
                       height: 35,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: AppConstants.tAccentColor),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: AppConstants.tAccentColor),
                       child: const Icon(
                         LineAwesomeIcons.alternate_pencil,
                         color: Colors.black,
@@ -52,8 +62,10 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text("tProfileHeading", style: Theme.of(context).textTheme.headline4),
-              Text("tProfileSubHeading", style: Theme.of(context).textTheme.bodyText2),
+              Text("tProfileHeading",
+                  style: Theme.of(context).textTheme.headline4),
+              Text("tProfileSubHeading",
+                  style: Theme.of(context).textTheme.bodyText2),
               const SizedBox(height: 20),
 
               /// -- BUTTON
@@ -62,8 +74,11 @@ class ProfileScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () => Get.to(() => const UpdateProfileScreen()),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: AppConstants.tPrimaryColor, side: BorderSide.none, shape: const StadiumBorder()),
-                  child: const Text("tEditProfile", style: TextStyle(color: AppConstants.tAccentColor)),
+                      backgroundColor: AppConstants.tPrimaryColor,
+                      side: BorderSide.none,
+                      shape: const StadiumBorder()),
+                  child: const Text("tEditProfile",
+                      style: TextStyle(color: AppConstants.tAccentColor)),
                 ),
               ),
               const SizedBox(height: 30),
@@ -71,12 +86,35 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 10),
 
               /// -- MENU
-              ProfileMenuWidget(title: "Settings", icon: LineAwesomeIcons.cog, onPress: () {}),
-              ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () {}),
-              ProfileMenuWidget(title: "User Management", icon: LineAwesomeIcons.user_check, onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Settings",
+                  icon: LineAwesomeIcons.cog,
+                  onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Billing Details",
+                  icon: LineAwesomeIcons.wallet,
+                  onPress: () {}),
+              ProfileMenuWidget(
+                  title: "User Management",
+                  icon: LineAwesomeIcons.user_check,
+                  onPress: () {}),
+              ProfileMenuWidget(
+                title: "Registered Campaigns",
+                icon: LineAwesomeIcons.user_check,
+                onPress: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  var userId = prefs.getString("userId");
+
+                  Get.to(RegisteredCampaigns(userId: userId));
+                },
+              ),
               const Divider(),
               const SizedBox(height: 10),
-              ProfileMenuWidget(title: "Information", icon: LineAwesomeIcons.info, onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Information",
+                  icon: LineAwesomeIcons.info,
+                  onPress: () {}),
               ProfileMenuWidget(
                   title: "Logout",
                   icon: LineAwesomeIcons.alternate_sign_out,
@@ -92,13 +130,23 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       confirm: Expanded(
                         child: ElevatedButton(
-                          // onPressed: () => AuthenticationRepository.instance.logout(),
-                          onPressed: () => print("hello world!"),
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, side: BorderSide.none),
+                          onPressed: () async {
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            // Delete Shared Preferences
+                            await prefs.clear();
+
+                            Get.toNamed("/login");
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent,
+                              side: BorderSide.none),
                           child: const Text("Yes"),
                         ),
                       ),
-                      cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("No")),
+                      cancel: OutlinedButton(
+                          onPressed: () => Get.back(), child: const Text("No")),
                     );
                   }),
             ],

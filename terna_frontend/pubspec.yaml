@@ -46,6 +46,9 @@ dependencies:
   geolocator: ^11.0.0
   google_maps_flutter: ^2.5.3
   geocoding: ^2.2.0
+  qr_flutter: ^4.1.0
+  pretty_qr_code: ^3.2.1
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:

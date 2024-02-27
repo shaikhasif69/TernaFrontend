@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:terna_frontend/models/Campaign.dart';
 import 'package:http/http.dart' as http;
 import 'package:terna_frontend/utils/app_constants.dart';
+import 'package:geocoding/geocoding.dart';
 
 class Campaigns {
   static Future<dynamic> getLatest5Campaigns() async {
@@ -67,5 +69,120 @@ class Campaigns {
     print(result);
 
     return result["data"];
+  }
+
+  static Future<bool> registerParticipants(
+      String userId, String campaignId) async {
+    var response = await http.post(
+      Uri.parse(
+        "${AppConstants.IP}/campaign/registerUserIntoCampaign",
+      ),
+      body: jsonEncode(
+        {"userId": userId, "campaignId": campaignId},
+      ),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    var data = await response.body;
+
+    final result = jsonDecode(data)["data"];
+
+    if (result == "ok") {
+      return true;
+    }
+
+    return false;
+  }
+
+  static Future<bool> checkIfAlreadyRegistered(
+      String userId, String campaignId) async {
+    print("this is the campaign id: " + campaignId);
+    print("this is the user id: " + userId);
+    var response = await http.post(
+      Uri.parse(
+        "${AppConstants.IP}/campaign/checkIfAlreadyRegistered",
+      ),
+      body: jsonEncode(
+        {"userId": userId, "campaignId": campaignId},
+      ),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    var data = await response.body;
+    print("this is the fucking dat:  " + data);
+
+    final result = jsonDecode(data)["data"];
+    // print("Result : " + result);
+
+    if (result == true) {
+      print("this is true for this particular campaign: " + campaignId);
+      return true;
+    }
+
+    return false;
+  }
+
+  static Future<dynamic> getRegisteredCampaignsOfUsers(String? userId) async {
+    print("Ddd");
+
+    var response = await http.post(
+      Uri.parse(
+        "${AppConstants.IP}/campaign/getRegisteredCampaignsOfUsers",
+      ),
+      body: jsonEncode({"userId": userId}),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    var data = await response.body;
+    final result = jsonDecode(data);
+    print("Pleas");
+    print(result);
+
+    return result["data"];
+  }
+
+  // Future<void> _getAddressFromLatLng(Position position) async {
+  //   await placemarkFromCoordinates(
+  //           _currentPosition!.latitude, _currentPosition!.longitude)
+  //       .then((List<Placemark> placemarks) {
+  //     Placemark place = placemarks[0];
+  //     setState(() {
+  //       _currentAddress =
+  //           '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+  //     });
+  //   }).catchError((e) {
+  //     debugPrint(e);
+  //   });
+  // }
+
+  // static Future<dynamic> getNearByCampaigns(Position lat, Position lng) async {
+  //   await placemarkFromCoordinates(
+  //           _currentPosition!.latitude, _currentPosition!.longitude)
+  //       .then((List<Placemark> placemarks) {
+  //     Placemark place = placemarks[0];
+
+  //     return '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+  //   });
+  // }
+
+  static Future<dynamic> getSearchResults(String searchTerm) async {
+    if (searchTerm.length > 2) {
+      var response = await http.post(
+        Uri.parse(
+          "${AppConstants.IP}/getSearchResults",
+        ),
+        body: jsonEncode({"search": searchTerm}),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      var data = await response.body;
+      final result = jsonDecode(data);
+      print("Please aa");
+      print(result);
+
+      return result["data"];
+    }
+
+    return null;
   }
 }
