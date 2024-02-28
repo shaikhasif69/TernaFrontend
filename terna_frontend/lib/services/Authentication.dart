@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terna_frontend/utils/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_geocoder/geocoder.dart';
 import 'dart:developer';
 
 class Authentication {
@@ -38,13 +40,6 @@ class Authentication {
       print(result);
       var mess = result["data"];
       print("mess" + mess);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('userEmail', email);
-      await prefs.setString('userPhone', phone);
-      await prefs.setString('userPassword', password);
-      await prefs.setString('userLat', location['latitude']!);
-      await prefs.setString('userLat', location['longitude']!);
-      await prefs.setBool("isLoggedIn", true);
 
       if (mess == "ok") {
         Fluttertoast.showToast(
@@ -61,6 +56,10 @@ class Authentication {
         await prefs.setString('userEmail', email);
         await prefs.setString('userPhone', phone);
         await prefs.setString('userPassword', password);
+        await prefs.setString('userLat', location['latitude']!);
+        await prefs.setString('userLng', location['longitude']!);
+        await prefs.setString('bloodGroup', bloodGrp);
+        await prefs.setBool("isLoggedIn", true);
 
         return true;
       } else {
@@ -96,7 +95,7 @@ class Authentication {
       String longitude = currentPosition.longitude.toString();
       return {'latitude': latitude, 'longitude': longitude};
     }
-    throw "what the fuck !";
+    throw "what the duk !";
   }
 
   static Future<bool> loginUser(email, password) async {
@@ -123,6 +122,7 @@ class Authentication {
       await prefs.setString('userEmail', mess["userEmail"]);
       await prefs.setString('userPhone', mess["userPhone"]);
       await prefs.setString('userPassword', mess["userPassword"]);
+      await prefs.setString('bloodGroup', mess["bloodGrp"]);
       await prefs.setBool("isLoggedIn", true);
 
       return true;
@@ -147,6 +147,9 @@ class Authentication {
         await prefs.setString('userEmail', mess["userEmail"]);
         await prefs.setString('userPhone', mess["userPhone"]);
         await prefs.setString('userPassword', mess["userPassword"]);
+        await prefs.setString('userLat', mess["userLat"]);
+        await prefs.setString('userLng', mess["userLng"]);
+        await prefs.setString('userLng', mess["userLng"]);
 
         return true;
       } else {

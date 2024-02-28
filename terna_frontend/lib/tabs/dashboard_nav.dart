@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:terna_frontend/screens/profile_screen.dart';
+import "package:terna_frontend/screens/AskForHelp.dart";
 
 import '../screens/home_screen.dart';
 import 'search_page.dart';
@@ -18,9 +19,9 @@ class _UserDashBoardState extends State<UserDashBoard> {
   int _currentIndex = 0;
   final tabs = [
     HomeScreen(),
+    AskForHelpPage(),
     SearchPage(),
     ProfileScreen(),
-
   ];
 
   @override
@@ -42,10 +43,13 @@ class _UserDashBoardState extends State<UserDashBoard> {
             label: "Home",
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.help_outline),
+            label: "Ask for help",
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: "Search",
           ),
-         
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_rounded),
             label: "Profile",

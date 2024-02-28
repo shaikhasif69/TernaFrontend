@@ -59,7 +59,6 @@ class _DetailPageState extends State<DetailPage> {
     // print(startDate.substring(1, 3));
     print('dateeeeeeeeeeeeee');
     // dynamic value = jsonDecode(data["participants"]);
-    print("this the value : " + data["participants"][0]["userId"]);
     // print("this is value: " + value["userId"]);
 
     print("hell");

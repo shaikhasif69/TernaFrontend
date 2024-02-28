@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:terna_frontend/models/Campaign.dart';
 import 'package:http/http.dart' as http;
@@ -184,5 +185,46 @@ class Campaigns {
     }
 
     return null;
+  }
+
+  static Future<Map<String, String>> getAddressFromCoordinates(
+      double? latitude, double? longitude) async {
+    if (latitude == null || longitude == null) {
+      throw 'Latitude or longitude is null';
+    }
+
+    try {
+      final coordinates = new Coordinates(latitude, longitude);
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          coordinates.latitude!, coordinates.longitude!);
+      Placemark first = placemarks.first;
+
+      // Extracting address details
+      String address = first.street ?? '';
+      String city = first.locality ?? '';
+      String state = first.administrativeArea ?? '';
+      String country = first.country ?? '';
+
+      return {
+        'address': address,
+        'city': city,
+        'state': state,
+        'country': country,
+      };
+    } catch (e) {
+      print('Error getting address: $e');
+      throw 'Failed to fetch address';
+    }
+  }
+
+  static Future<dynamic> getNearByCampaigns(String? lat, String? lng) async {
+    var latVal = double.parse(lat!);
+    var lngVal = double.parse(lng!);
+    print(latVal);
+    print(latVal);
+    Future<Map<String, String>> map = getAddressFromCoordinates(latVal, lngVal);
+
+    print("Maopppp");
+    print(map);
   }
 }

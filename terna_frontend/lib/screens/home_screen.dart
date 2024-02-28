@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,20 +28,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<dynamic> campaigns = Campaigns.getLatest5Campaigns();
   Future<dynamic> upcomingCampaigns = Campaigns.getLatest5UpcomingCampaigns();
-  // Future<dynamic> nearbyCampaigns = Campaigns.getNearByCampaigns(_currentPosition!.latitude, );
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    // eventController.dispose();
-    super.dispose();
-  }
+  Future<dynamic>? nearbyCampaigns;
 
   @override
   void initState() {
-    // TODO: implement initState
-    // eventController.getAllEventsForUser();
     super.initState();
+    getAllNearByCampaigns();
+  }
+
+  Future<void> getAllNearByCampaigns() async {
+    try {
+      print("Callback 1111");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? lat = prefs.getString("userLat");
+      String? lng = prefs.getString("userLng");
+      print(lat.toString() + lng.toString());
+
+      // setState(() {
+      nearbyCampaigns = Campaigns.getNearByCampaigns(lat, lng);
+      // });
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 
   @override
@@ -55,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  SvgPicture.asset("assets/images/app_icon_color.svg"),
+                  // SvgPicture.asset("assets/images/app_icon_color.svg"),
                   const SizedBox(
                     height: 5,
                   ),
@@ -156,13 +167,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  padded(subTitle("Nearby Campaigns!")),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  // const SizedBox(
+                  //   height: 25,
+                  // ),
+                  // padded(subTitle("Nearby Campaigns!")),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
                   // Container(
                   //   height: MediaQuery.of(context).size.height * 0.3,
                   //   child: Padding(
@@ -215,20 +226,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   //         },
                   //       )
 
-                  //       // child: ListView.builder(
-                  //       //     itemCount: 4,
-                  //       //     itemBuilder: (context, index) {
-                  //       //       return UpComingEvents(
-                  //       //         eventName: upcomingevent[index][0],
-                  //       //         eventSubTitle: upcomingevent[index][1],
-                  //       //         eventImage: upcomingevent[index][2],
-                  //       //         eventStartDate: upcomingevent[index][3],
-                  //       //       );
-                  //       //     }),
+                  //       //       // child: ListView.builder(
+                  //       //       //     itemCount: 4,
+                  //       //       //     itemBuilder: (context, index) {
+                  //       //       //       return UpComingEvents(
+                  //       //       //         eventName: upcomingevent[index][0],
+                  //       //       //         eventSubTitle: upcomingevent[index][1],
+                  //       //       //         eventImage: upcomingevent[index][2],
+                  //       //       //         eventStartDate: upcomingevent[index][3],
+                  //       //       //       );
+                  //       //       //     }),
                   //       ),
                   // ),
                   const SizedBox(
-                    height: 150,
+                    height: 30,
                   ),
                   // padded(subTitle("Best Selling")),
                   // getHorizontalItemSlider(firstEvent),
@@ -377,7 +388,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 8,
         ),
         Text(
-          "Mumbai, Byculla!",
+          "Nerul, Terna College",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         )
       ],

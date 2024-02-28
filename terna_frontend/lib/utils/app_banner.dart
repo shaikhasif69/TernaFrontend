@@ -9,20 +9,22 @@ class MyAppBanner extends StatelessWidget {
     return Container(
       // width: MediaQuery.of(context).size.width * 0.8,
       width: 500,
-      height: 115,
+      height: 140,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
               image: AssetImage(
-                'assets/banner_background.png',
+                'assets/images/blood.jpg',
               ),
               fit: BoxFit.cover)),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Image.asset('assets/cat1.png'),
-          ),
+          // Container(
+          //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          //   child: Image.asset('assets/cat1.png'),
+          // ),
           Spacer(),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,

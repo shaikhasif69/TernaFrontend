@@ -49,6 +49,7 @@ dependencies:
   qr_flutter: ^4.1.0
   pretty_qr_code: ^3.2.1
   dropdown_button2: ^2.3.9
+  flutter_geocoder: ^0.2.2-nullsafety
 
 dev_dependencies:
   flutter_test:
