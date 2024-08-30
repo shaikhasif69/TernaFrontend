@@ -3,6 +3,11 @@ BloodConnect - Blood Donation and Campaign Management System
 Overview
 BloodConnect is a comprehensive web and mobile application designed to streamline blood donation campaigns and facilitate efficient blood donation requests. Developed as part of the AVALON Hackathon, this project secured 1st place and addresses critical needs in the healthcare sector.
 
+
+Screen shots : 
+
+
+
 Features
 NGO Management: NGOs can sign up, create and manage blood donation campaigns, and invite donors to participate.
 Request System: Patients and hospitals can request blood donations directly from registered NGOs.
@@ -25,7 +30,7 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/your-username/bloodconnect.git
+git clone https://github.com/shaikhasif69/TernaFrontend.git
 Install dependencies:
 
 Navigate to the project directory and run:
